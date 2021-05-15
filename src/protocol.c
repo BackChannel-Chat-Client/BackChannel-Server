@@ -60,7 +60,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 								sizeof(temp_packet.packet_size) + 
 								sizeof(temp_packet.packet_id) + 
 								sizeof(temp_packet.channel_id) + 
-								sizeof(temp_packet.req_type));
+								sizeof(temp_packet.req_type) + 1);
 
 	/*
 		Get the request body
@@ -71,7 +71,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 								sizeof(temp_packet.packet_id) + 
 								sizeof(temp_packet.channel_id) + 
 								sizeof(temp_packet.req_type) + 
-								strlen(temp_packet.auth_key) + 1);
+								strlen(temp_packet.auth_key) + 2);
 
 	*packet = temp_packet;
 	

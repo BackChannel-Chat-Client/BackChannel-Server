@@ -4,18 +4,6 @@
     "type": "split",
     "children": [
       {
-        "id": "8f95d6283c1623e4",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "BackChannel Protocol/BackChannel Protocol.md",
-            "mode": "source"
-          }
-        },
-        "group": "af2a27624d83f173"
-      },
-      {
         "id": "cfeb911fd7f9d85a",
         "type": "leaf",
         "state": {
@@ -24,8 +12,7 @@
             "file": "BackChannel Protocol/BackChannel Protocol.md",
             "mode": "preview"
           }
-        },
-        "group": "af2a27624d83f173"
+        }
       }
     ],
     "direction": "vertical"
@@ -118,13 +105,13 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "8f95d6283c1623e4",
+  "active": "cfeb911fd7f9d85a",
   "lastOpenFiles": [
     "BackChannel Protocol/BackChannel Protocol.md",
-    "BackChannel Server.md",
     "BackChannel Protocol/Request Types/BackChannel Protocol Request Types.md",
-    "BackChannel Protocol/Request Types/Untitled.md",
     "BackChannel Protocol/Request Types/BACKCHANNEL_REQ_SEND_MESSAGE.md",
+    "BackChannel Server.md",
+    "BackChannel Protocol/Request Types/Untitled.md",
     "BackChannel_Protocol.md",
     "BackChannel_Server.md",
     "Untitled.md"
