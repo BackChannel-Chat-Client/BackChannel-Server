@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\requests">
+      <UniqueIdentifier>{23e3f0d4-66df-4706-8b62-d16857639f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\requests">
+      <UniqueIdentifier>{91354a90-e189-43a8-ab35-f769ad391a3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -33,6 +39,9 @@
     <ClCompile Include="src\threads.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_ERRNO.c">
+      <Filter>Source Files\requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -52,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="include\threads.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_ERRNO.h">
+      <Filter>Header Files\requests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

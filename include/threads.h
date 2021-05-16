@@ -8,7 +8,9 @@
 	typedef void(* BC_THREAD_PROC)(void* lpParameter);
 #endif
 
-#include "main.h"
+#include "common.h"
+
+#include "error.h"
 
 typedef void* BC_THREAD;
 

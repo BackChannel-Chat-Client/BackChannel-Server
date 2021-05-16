@@ -46,7 +46,7 @@ packet_size = 13 + strlen(auth_key) + 1 + strlen(req_body) + 1;
 ### Packet ID
 The packet ID member is used to identify requests and responses to and from the BackChannel server. This ID is chosen by the client, and can be any value (although it is recommended to be chosen using random number generation).
 
-The BackChannel server will respond with the packet ID given to indicate a successful request, or it will respond with `BACKCHANNEL_REQ_ERROR` (-1) if there is an error with the request.
+The BackChannel server will respond with the packet ID given to indicate a successful request, or it will respond with `BACKCHANNEL_REQ_ERROR` (0xFFFFFFFF) if there is an error with the request.
 
 ### Channel ID
 The channel ID member is used to specify which channel to make the request to. Use channel ID `0` to send requests to the server itself.

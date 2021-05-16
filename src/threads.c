@@ -13,7 +13,7 @@ Bc_Platform_StartThread(BC_THREAD_PROC thread_proc, void* parameter, BC_THREAD* 
 	thread_handle = CreateThread(
 		NULL,
 		0,
-		thread_proc,
+		(LPTHREAD_START_ROUTINE)thread_proc,
 		parameter,
 		0,
 		NULL);

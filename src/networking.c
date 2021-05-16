@@ -35,12 +35,34 @@ BcConnectionHandler(void* parameter)
 					bcPacket.auth_key,
 					bcPacket.req_body);
 
+		BcHandleRequest(bcConnection, &bcPacket);
+
 		free(bcPacket.auth_key);
 		free(bcPacket.req_body);
 	}
-	
+
 	closesocket(bcConnection->sock);
 	free(bcConnection);
+}
+
+BC_STATUS
+BcNetSendUint32(P_BC_CONNECTION conn, uint32_t status)
+{
+	if (!conn)
+		return BC_INVALID_PARAM;
+
+	if (!conn->sock)
+		return BC_NOT_CONNECTED;
+
+	// TODO: This isn't insecure, right?
+	if (send(conn->sock, &status, sizeof(status), 0) < 0)
+	{
+		BcError("Couldn't send data to client... closing socket.");
+
+		return BC_NETWORK_ERROR;
+	}
+
+	return BC_SUCCESS;
 }
 
 BC_STATUS
@@ -65,7 +87,7 @@ BC_STATUS
 BcHandleNewConnections(unsigned short port)
 {
 	struct sockaddr_in lpServerInfo = { 0 };
-	struct sockaddr_in lpClientInfo = { 0 };
+	struct sockaddr lpClientInfo = { 0 };
 	int sockaddr_in_size = sizeof(struct sockaddr_in);
 	SOCKET serverSock = 0;
 	SOCKET clientSock = 0;
@@ -134,9 +156,10 @@ BcHandleNewConnections(unsigned short port)
 		*/
 		bcConnection->sock = clientSock;
 		bcConnection->connInfo = lpClientInfo;
+		bcConnection->bc_errno = BC_SUCCESS;
 
 		/*
-			Start a new thread to handle connections
+			Start a new thread to handle connection
 		*/
 		Bc_Platform_StartThread(BcConnectionHandler, bcConnection, &thread_handle);
 	} while (1);

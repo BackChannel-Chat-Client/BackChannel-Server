@@ -1,6 +1,6 @@
-#pragma once
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 #define BcError( lpError ) (BcErrorEx(lpError, __FILE__, __LINE__))
 #define BcFatalError( lpError ) (BcFatalErrorEx(lpError, __FILE__, __LINE__))

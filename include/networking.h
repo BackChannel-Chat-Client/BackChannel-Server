@@ -12,18 +12,24 @@
 #endif
 
 #include <stdio.h>
+#include <stdint.h>
 
-#include "main.h"
+#include "common.h"
+
 #include "log.h"
 #include "error.h"
 #include "threads.h"
 #include "protocol.h"
 
-typedef struct BC_CONNECTION
+typedef struct _BC_CONNECTION
 {
 	SOCKET sock;
-	struct sockaddr_in connInfo;
+	struct sockaddr connInfo;
+	uint32_t bc_errno;
 } BC_CONNECTION, *P_BC_CONNECTION;
+
+BC_STATUS
+BcNetSendUint32(P_BC_CONNECTION conn, uint32_t status);
 
 BC_STATUS
 BcInitializeNet(void);
