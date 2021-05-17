@@ -138,13 +138,14 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
 	*/
 	switch (packet->req_type)
 	{
-	case BACKCHANNEL_REQ_GET_ERRNO:
-		break;
-	default: /* Unimplemented request */
-		conn->bc_errno = BC_UNIMPLEMENTED;
-		BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
+		case BACKCHANNEL_REQ_GET_ERRNO:
+			BcReqGetErrno(conn, packet);
+			break;
+		default: /* Unimplemented request */
+			conn->bc_errno = BC_UNIMPLEMENTED;
+			BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
 		
-		return BC_UNIMPLEMENTED;
+			return BC_UNIMPLEMENTED;
 	}
 
 	return BC_SUCCESS;
