@@ -17,4 +17,6 @@ BcReqGetErrno(P_BC_CONNECTION conn, P_BC_PACKET packet)
 	}
 
 	BcNetSendUint32(conn, conn->bc_errno);
+
+	return BC_SUCCESS;
 }
