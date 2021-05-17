@@ -3,6 +3,9 @@
 #ifdef _WIN32
 	#include <WinSock2.h>
 	#pragma comment(lib, "ws2_32.lib")
+
+	/* I hate MSVC */
+	#define strdup _strdup
 #elif __unix__
 	#include<sys/socket.h>
 	#include<netdb.h>
@@ -12,6 +15,7 @@
 #endif
 
 #include <stdint.h>
+#include <string.h>
 
 #include "common.h"
 

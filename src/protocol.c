@@ -60,7 +60,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 	/*
 		Get the auth key
 	*/
-	temp_packet.auth_key = _strdup(
+	temp_packet.auth_key = strdup(
 								buffer + 
 								sizeof(temp_packet.packet_size) + 
 								sizeof(temp_packet.packet_id) + 
@@ -70,7 +70,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 	/*
 		Get the request body
 	*/
-	temp_packet.req_body = _strdup(
+	temp_packet.req_body = strdup(
 								buffer + 
 								sizeof(temp_packet.packet_size) + 
 								sizeof(temp_packet.packet_id) + 
