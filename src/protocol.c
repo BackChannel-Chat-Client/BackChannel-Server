@@ -127,7 +127,7 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
 	if (BcVerifyPacket(packet) != BC_SUCCESS)
 	{
 		conn->bc_errno = BC_INVALID_PACKET;
-		BcNetSendUint32(conn->sock, BACKCHANNEL_REQ_ERROR);
+		BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
 		
 		return BC_INVALID_PACKET;
 	}
@@ -142,7 +142,7 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
 		break;
 	default: /* Unimplemented request */
 		conn->bc_errno = BC_UNIMPLEMENTED;
-		BcNetSendUint32(conn->sock, BACKCHANNEL_REQ_ERROR);
+		BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
 		
 		return BC_UNIMPLEMENTED;
 	}
