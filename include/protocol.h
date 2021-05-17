@@ -34,6 +34,7 @@
 #define BACKCHANNEL_REQ_AUTH				0x01	/* Verify authentication key									*/
 #define BACKCHANNEL_REQ_REGISTER			0x02	/* Register for new authentication key							*/
 #define BACKCHANNEL_REQ_VERIFY_SECURITY		0x03	/* Verify the integrity of communications (somehow)				*/
+#define BACKCHANNEL_REQ_REGISTER_FOR_EVENT	0x04	/* Register connection to receive info on events. (i.e. new messages, new users, etc) */
 #define BACKCHANNEL_REQ_GET_CHANNELS		0x10	/* Get a list of all channel ids accessible to your auth key	*/
 #define BACKCHANNEL_REQ_SEND_MESSAGE		0x11	/* Send a message to the channel ID specified					*/
 #define BACKCHANNEL_REQ_GET_MESSAGE			0x12	/* Get message by its ID										*/

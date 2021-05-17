@@ -55,7 +55,7 @@ BcNetSendUint32(P_BC_CONNECTION conn, uint32_t status)
 		return BC_NOT_CONNECTED;
 
 	// TODO: This isn't insecure, right?
-	if (send(conn->sock, &status, sizeof(status), 0) < 0)
+	if (send(conn->sock, (char*)&status, sizeof(status), 0) < 0)
 	{
 		BcError("Couldn't send data to client... closing socket.");
 

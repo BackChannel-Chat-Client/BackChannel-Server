@@ -28,7 +28,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 	*/
 	if (temp_packet.packet_size < buffer_size || temp_packet.packet_size > buffer_size)
 	{
-		printf("\npacket size: %d\nbuffer_size: %d\n", temp_packet.packet_size, buffer_size);
+		printf("\npacket size: %d\nbuffer_size: %zu\n", temp_packet.packet_size, buffer_size);
 		BcError("Packet Size Invalid");
 		return BC_INVALID_PACKET;
 	}
