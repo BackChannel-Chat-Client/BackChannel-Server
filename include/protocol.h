@@ -79,3 +79,6 @@ BcVerifyRequestPacket(P_BC_REQ_PACKET packet);
 
 BC_STATUS
 BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet);
+
+BC_STATUS
+BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, char* resp_body, uint32_t resp_body_size);

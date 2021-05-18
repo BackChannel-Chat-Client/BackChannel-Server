@@ -20,6 +20,12 @@ BcConnectionHandler(void* parameter)
 
 	while ((bytes_received = recv(bcConnection->sock, recv_buffer, sizeof(recv_buffer), 0)) > 0)
 	{
+		/*
+			NULL-Terminate the buffer. If recv receives 4096 bytes, it is not guaranteed
+			that the final byte is the null byte of the req_body member.
+		*/
+		recv_buffer[4095] = 0;
+
 		bcResult = BcParseRequest(recv_buffer, bytes_received, &bcPacket);
 		if (bcResult != BC_SUCCESS)
 		{

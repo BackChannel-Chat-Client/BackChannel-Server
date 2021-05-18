@@ -28,8 +28,8 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_REQ_PACKET packet)
 	*/
 	if (temp_packet.packet_size < buffer_size || temp_packet.packet_size > buffer_size)
 	{
-		printf("\npacket size: %d\nbuffer_size: %zu\n", temp_packet.packet_size, buffer_size);
 		BcError("Packet Size Invalid");
+		
 		return BC_INVALID_PACKET;
 	}
 
@@ -127,7 +127,7 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	if (BcVerifyRequestPacket(packet) != BC_SUCCESS)
 	{
 		conn->bc_errno = BC_INVALID_PACKET;
-		BcNetSendUint32(conn, conn->bc_errno);
+		BcSendResponse(conn, BACKCHANNEL_REQ_ERROR, conn->bc_errno, "", 1);
 		
 		return BC_INVALID_PACKET;
 	}
@@ -143,7 +143,7 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 			break;
 		default: /* Unimplemented request */
 			conn->bc_errno = BC_UNIMPLEMENTED;
-			BcNetSendUint32(conn, conn->bc_errno);
+			BcSendResponse(conn, packet->packet_id, conn->bc_errno, "", 1);
 		
 			return BC_UNIMPLEMENTED;
 	}
@@ -151,20 +151,25 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	return BC_SUCCESS;
 }
 
-#ifdef FUCK_ME
 BC_STATUS
-BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, char* resp_body)
-{
+BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, char* resp_body, uint32_t resp_body_size)
+{	
 	if (!resp_body || !conn)
 		return BC_INVALID_PARAM;
 
 	if (!conn->sock)
 		return BC_NOT_CONNECTED;
 
-	if (strlen(resp_body) >= UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE)
+	/*
+		Ensure the length of the string provided is 32 bit and
+		ensure the body is properly truncated
+	*/
+	if (resp_body_size >= UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE) {
 		resp_body[UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE] = 0;
+		resp_body_size = UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE - 1;
+	}
 
-	uint32_t resp_size = BC_MINIMUM_RESPONSE_PACKET_SIZE + (uint32_t)strlen(resp_body);
+	uint32_t resp_size = BC_MINIMUM_RESPONSE_PACKET_SIZE + resp_body_size;
 
 	char* send_buffer = malloc(resp_size);
 	if (!send_buffer)
@@ -201,5 +206,6 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 	send(conn->sock, send_buffer, resp_size, 0);
 
 	free(send_buffer);
+
+	return BC_SUCCESS;
 }
-#endif
