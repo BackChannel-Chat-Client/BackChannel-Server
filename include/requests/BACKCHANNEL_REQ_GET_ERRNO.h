@@ -13,11 +13,11 @@
 	I hate compilers! I hate compilers!
 */
 typedef struct _BC_CONNECTION* P_BC_CONNECTION;
-typedef struct BC_PACKET* P_BC_PACKET;
+typedef struct _BC_REQ_PACKET* P_BC_REQ_PACKET;
 
 /*
 	BACKCHANNEL_REQ_GET_ERRNO
 	Sends the last BC_ERRNO value to the client
 */
 BC_STATUS
-BcReqGetErrno(P_BC_CONNECTION conn, P_BC_PACKET packet);
+BcReqGetErrno(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet);

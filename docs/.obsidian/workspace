@@ -9,10 +9,23 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "BackChannel Protocol/BackChannel Protocol.md",
+            "file": "BackChannel Protocol/Response Packets.md",
+            "mode": "source"
+          }
+        },
+        "group": "40df36be7a040b26"
+      },
+      {
+        "id": "10fa8df3219f96c1",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "BackChannel Protocol/Response Packets.md",
             "mode": "preview"
           }
-        }
+        },
+        "group": "40df36be7a040b26"
       }
     ],
     "direction": "vertical"
@@ -60,7 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 351
+    "width": 245
   },
   "right": {
     "id": "f79ba6426b93809f",
@@ -76,7 +89,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BackChannel Protocol/BackChannel Protocol.md",
+                "file": "BackChannel Protocol/Response Packets.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,8 +110,17 @@
                 "useHierarchy": true
               }
             }
+          },
+          {
+            "id": "6bcc7ee9ae56b56b",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -107,13 +129,15 @@
   },
   "active": "cfeb911fd7f9d85a",
   "lastOpenFiles": [
+    "BackChannel Protocol/Response Packets.md",
+    "BackChannel Protocol/Response Status Codes.md",
     "BackChannel Protocol/BackChannel Protocol.md",
+    "BackChannel Protocol/Request Packets.md",
+    "BackChannel Server.md",
+    "Response Status Codes.md",
     "BackChannel Protocol/Request Types/BackChannel Protocol Request Types.md",
     "BackChannel Protocol/Request Types/BACKCHANNEL_REQ_SEND_MESSAGE.md",
-    "BackChannel Server.md",
-    "BackChannel Protocol/Request Types/Untitled.md",
-    "BackChannel_Protocol.md",
-    "BackChannel_Server.md",
-    "Untitled.md"
+    "BackChannel Protocol/Response Packet.md",
+    "BackChannel Protocol/Request Packet.md"
   ]
 }

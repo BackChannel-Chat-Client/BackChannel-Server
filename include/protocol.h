@@ -43,9 +43,10 @@
 	Minimum packet size is 15 bytes
 	13 bytes for the integral members, and 2 bytes for the null characters in the `auth_key` and `req_body` buffers.
 */
-#define BC_MINIMUM_PACKET_SIZE 15 
+#define BC_MINIMUM_REQUEST_PACKET_SIZE 15 
+#define BC_MINIMUM_RESPONSE_PACKET_SIZE 13
 
-typedef struct BC_PACKET
+typedef struct _BC_REQ_PACKET
 {
 	uint32_t	packet_size;
 	uint32_t	packet_id;
@@ -53,7 +54,16 @@ typedef struct BC_PACKET
 	uint8_t		req_type;
 	char*		auth_key;
 	char*		req_body;
-} BC_PACKET, *P_BC_PACKET;
+} BC_REQ_PACKET, *P_BC_REQ_PACKET;
+//typedef BC_REQ_PACKET* P_BC_REQ_PACKET;
+
+typedef struct _BC_RESP_PACKET
+{
+	uint32_t	packet_size;
+	uint32_t	packet_id;
+	uint32_t	resp_status;
+	char* resp_body;
+} BC_RESP_PACKET, * P_BC_RESP_PACKET;
 
 /*
 	Forward declaration of P_BC_CONNECTION.
@@ -62,10 +72,10 @@ typedef struct BC_PACKET
 typedef struct _BC_CONNECTION *P_BC_CONNECTION;
 
 BC_STATUS
-BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet);
+BcParseRequest(char* buffer, size_t buffer_size, P_BC_REQ_PACKET packet);
 
 BC_STATUS
-BcVerifyPacket(P_BC_PACKET packet);
+BcVerifyRequestPacket(P_BC_REQ_PACKET packet);
 
 BC_STATUS
-BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet);
+BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet);

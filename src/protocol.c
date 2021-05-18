@@ -1,9 +1,9 @@
 #include "protocol.h"
 
 BC_STATUS
-BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
+BcParseRequest(char* buffer, size_t buffer_size, P_BC_REQ_PACKET packet)
 {
-	BC_PACKET temp_packet = { 0 };
+	BC_REQ_PACKET temp_packet = { 0 };
 	
 	/*
 		We check the buffer_size parameter because we copy
@@ -84,7 +84,7 @@ BcParseRequest(char* buffer, size_t buffer_size, P_BC_PACKET packet)
 }
 
 BC_STATUS
-BcVerifyPacket(P_BC_PACKET packet)
+BcVerifyRequestPacket(P_BC_REQ_PACKET packet)
 {
 	if (!packet)
 		return BC_INVALID_PARAM;
@@ -93,7 +93,7 @@ BcVerifyPacket(P_BC_PACKET packet)
 		If the packet size is less than the minimum,
 		we have a problem
 	*/
-	if (packet->packet_size < BC_MINIMUM_PACKET_SIZE)
+	if (packet->packet_size < BC_MINIMUM_REQUEST_PACKET_SIZE)
 		return BC_INVALID_PACKET;
 
 	/*
@@ -107,7 +107,7 @@ BcVerifyPacket(P_BC_PACKET packet)
 }
 
 BC_STATUS
-BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
+BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 {
 	/*
 		Validate parameters
@@ -124,10 +124,10 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
 	/*
 		Verify the request packet
 	*/
-	if (BcVerifyPacket(packet) != BC_SUCCESS)
+	if (BcVerifyRequestPacket(packet) != BC_SUCCESS)
 	{
 		conn->bc_errno = BC_INVALID_PACKET;
-		BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
+		BcNetSendUint32(conn, conn->bc_errno);
 		
 		return BC_INVALID_PACKET;
 	}
@@ -143,10 +143,63 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_PACKET packet)
 			break;
 		default: /* Unimplemented request */
 			conn->bc_errno = BC_UNIMPLEMENTED;
-			BcNetSendUint32(conn, BACKCHANNEL_REQ_ERROR);
+			BcNetSendUint32(conn, conn->bc_errno);
 		
 			return BC_UNIMPLEMENTED;
 	}
 
 	return BC_SUCCESS;
 }
+
+#ifdef FUCK_ME
+BC_STATUS
+BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, char* resp_body)
+{
+	if (!resp_body || !conn)
+		return BC_INVALID_PARAM;
+
+	if (!conn->sock)
+		return BC_NOT_CONNECTED;
+
+	if (strlen(resp_body) >= UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE)
+		resp_body[UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE] = 0;
+
+	uint32_t resp_size = BC_MINIMUM_RESPONSE_PACKET_SIZE + (uint32_t)strlen(resp_body);
+
+	char* send_buffer = malloc(resp_size);
+	if (!send_buffer)
+	{
+		BcError("Failed to allocate response packet");
+
+		return BC_ERROR;
+	}
+
+	/*
+		Response Packet Size
+	*/
+	memcpy(send_buffer, &resp_size, sizeof(resp_size));
+		
+	/*
+		Packet ID
+	*/
+	memcpy(send_buffer + sizeof(resp_size), &packet_id, sizeof(packet_id));
+
+	/*
+		Response status
+	*/
+	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id), &resp_status, sizeof(resp_status));
+
+	/*
+		Response body
+	*/
+	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id) + sizeof(resp_status), resp_body, strlen(resp_body)+1);
+
+	/*
+		TODO: send takes an int as input. This may be an issue if the resp_size
+			is bigger than INT_MAX, and also if the int type isn't 4 bytes on the compiled system
+	*/
+	send(conn->sock, send_buffer, resp_size, 0);
+
+	free(send_buffer);
+}
+#endif

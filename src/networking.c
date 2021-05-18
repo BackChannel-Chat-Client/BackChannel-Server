@@ -7,7 +7,7 @@ BcConnectionHandler(void* parameter)
 	char recv_buffer[4096] = { 0 };
 	int bytes_received = 0;
 	P_BC_CONNECTION bcConnection = NULL;
-	BC_PACKET bcPacket = { 0 };
+	BC_REQ_PACKET bcPacket = { 0 };
 	
 	bcConnection = (P_BC_CONNECTION)parameter;
 	if (!bcConnection)
