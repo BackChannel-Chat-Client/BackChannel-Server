@@ -10,7 +10,7 @@
 
 #include "common.h"
 
-#include "error.h"
+#include "log.h"
 
 typedef void* BC_THREAD;
 

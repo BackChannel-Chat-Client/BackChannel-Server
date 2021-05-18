@@ -30,9 +30,6 @@
     <ClCompile Include="src\protocol.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\error.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\log.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\protocol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\log.h">

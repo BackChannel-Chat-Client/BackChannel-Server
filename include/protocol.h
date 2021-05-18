@@ -20,7 +20,7 @@
 #include "common.h"
 
 #include "networking.h"
-#include "error.h"
+#include "log.h"
 
 /*
 	Request includes	
