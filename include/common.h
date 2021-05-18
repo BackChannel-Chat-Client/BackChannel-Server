@@ -5,6 +5,7 @@ typedef uint32_t BC_STATUS;
 #define BC_SUCCESS 0
 #define BC_ERROR 1
 #define BC_INVALID_PARAM 2
+#define BC_FILESYSTEM_ERROR 3
 
 /*
 	Request ERRNOs

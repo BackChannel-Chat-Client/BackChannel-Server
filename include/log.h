@@ -1,21 +1,30 @@
 #pragma once
 
+#ifdef _WIN32
+	#include <WinSock2.h>
+#else
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
-#define BcError( lpError ) (BcErrorEx(lpError, __FILE__, __LINE__))
-#define BcFatalError( lpError ) (BcFatalErrorEx(lpError, __FILE__, __LINE__))
+#include "common.h"
+
+#define BcLog( log ) (BcLogEx(stdout, log))
+#define BcError( lpError ) (BcErrorEx(stderr, lpError, __FILE__, __LINE__))
+#define BcFatalError( lpError ) (BcFatalErrorEx(stderr, lpError, __FILE__, __LINE__))
 
 void
-BcLog(const char* log);
+BcLogEx(FILE* output_stream, const char* log);
 
 /*
 	Prints out an error to the stderr stream
 
 	TODO: Add logging
 */
-void BcErrorEx(const char* lpError, const char* file, unsigned long line);
+void
+BcErrorEx(FILE* output_stream, const char* lpError, const char* file, unsigned long line);
 
 /*
 	Prints out an error to the stderr stream, and exits the program with code
@@ -23,4 +32,5 @@ void BcErrorEx(const char* lpError, const char* file, unsigned long line);
 
 	TODO: Add logging
 */
-void BcFatalErrorEx(const char* lpError, const char* file, unsigned long line);
+void
+BcFatalErrorEx(FILE* output_stream, const char* lpError, const char* file, unsigned long line);
