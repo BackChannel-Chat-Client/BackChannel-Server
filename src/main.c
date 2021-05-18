@@ -3,7 +3,6 @@
 int main(size_t argc, char** argv)
 {
 	BC_STATUS bcResult = 0;
-	BC_CONNECTION bcConnection = { 0 };
 
 	/*
 		Default port is 3090, change with argv
@@ -12,7 +11,8 @@ int main(size_t argc, char** argv)
 
 	if (argc == 2)
 	{
-		port = strtoul(argv[1], NULL, 0);
+		/* This is probably fine and not at all dangerous */
+		port = (unsigned short)strtoul(argv[1], NULL, 0);
 	}
 
 	/*

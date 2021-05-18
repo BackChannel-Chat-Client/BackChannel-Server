@@ -86,6 +86,7 @@ BcInitializeNet(void)
 BC_STATUS
 BcHandleNewConnections(unsigned short port)
 {
+	BC_STATUS bcResult = 0;
 	struct sockaddr_in lpServerInfo = { 0 };
 	struct sockaddr lpClientInfo = { 0 };
 	int sockaddr_in_size = sizeof(struct sockaddr_in);
@@ -111,7 +112,7 @@ BcHandleNewConnections(unsigned short port)
 	/*
 		Bind the server to the specified port
 	*/
-	if (bind(serverSock, &lpServerInfo, sizeof(lpServerInfo)) < 0)
+	if (bind(serverSock, (struct sockaddr*)&lpServerInfo, sizeof(lpServerInfo)) < 0)
 		BcFatalError("Could not bind to port");
 
 	/*
@@ -128,9 +129,10 @@ BcHandleNewConnections(unsigned short port)
 	{
 		/*
 			Accept new connection
+			TODO: Add a POSIX form of INVALID_SOCKET to the defines
 		*/
 		clientSock = accept(serverSock, &lpClientInfo, &sockaddr_in_size);
-		if (clientSock < 0)
+		if (clientSock == INVALID_SOCKET)
 		{
 			BcError("Failed to accept connection");
 			
@@ -161,7 +163,15 @@ BcHandleNewConnections(unsigned short port)
 		/*
 			Start a new thread to handle connection
 		*/
-		Bc_Platform_StartThread(BcConnectionHandler, bcConnection, &thread_handle);
+		bcResult = Bc_Platform_StartThread(BcConnectionHandler, bcConnection, &thread_handle);
+		if (bcResult != BC_SUCCESS)
+		{
+			BcError("Failed to start connection thread");
+			closesocket(bcConnection->sock);
+			free(bcConnection);
+
+			continue;
+		}
 	} while (1);
 
 	return BC_SUCCESS;

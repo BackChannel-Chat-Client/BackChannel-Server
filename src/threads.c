@@ -3,7 +3,6 @@
 BC_STATUS
 Bc_Platform_StartThread(BC_THREAD_PROC thread_proc, void* parameter, BC_THREAD* thread_id)
 {
-	unsigned long thread_id_temp = 0;
 	HANDLE thread_handle = NULL;
 
 	if (!thread_proc || !thread_id)
@@ -18,12 +17,12 @@ Bc_Platform_StartThread(BC_THREAD_PROC thread_proc, void* parameter, BC_THREAD* 
 		0,
 		NULL);
 	if (!thread_handle)
-		BcFatalError("Failed to create thread");
+		BcFatalError("Failed to create connection thread");
 
 	*thread_id = thread_handle;
 
 	return BC_SUCCESS;
-#endif
-
+#else
 	return BC_UNIMPLEMENTED;
+#endif
 }
