@@ -72,7 +72,7 @@ void
 BcLogEx(FILE* output_stream, const char* log)
 {
 #ifdef _DEBUG
-	fputs(log, output_stream);
+	puts(output_stream);
 #else
 	/*
 		TODO: Implement logging to files
