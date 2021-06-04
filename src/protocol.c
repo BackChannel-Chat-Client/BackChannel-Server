@@ -161,6 +161,13 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 		return BC_NOT_CONNECTED;
 
 	/*
+		Size is misrepresented here, so we correct.
+		This is probably dumb but fuck you.
+	*/
+	if (resp_body_size == 1)
+		resp_body_size = 0;
+
+	/*
 		Ensure the length of the string provided is 32 bit and
 		ensure the body is properly truncated
 	*/
