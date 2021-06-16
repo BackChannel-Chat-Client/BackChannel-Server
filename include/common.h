@@ -1,11 +1,16 @@
 #include <stdint.h>
+//#include "channels.h"
 
 typedef uint32_t BC_STATUS;
+
+#define BC_UNREFERENCED_PARAMETER(x) (x)
 
 #define BC_SUCCESS 0
 #define BC_ERROR 1
 #define BC_INVALID_PARAM 2
 #define BC_FILESYSTEM_ERROR 3
+#define BC_INVALID_CONTEXT 4
+#define BC_CHANNEL_LIMIT_HIT 5
 
 /*
 	Request ERRNOs

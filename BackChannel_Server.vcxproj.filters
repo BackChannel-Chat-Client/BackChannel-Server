@@ -39,6 +39,15 @@
     <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_ERRNO.c">
       <Filter>Source Files\requests</Filter>
     </ClCompile>
+    <ClCompile Include="src\channels.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\linked_list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -61,6 +70,15 @@
     </ClInclude>
     <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_ERRNO.h">
       <Filter>Header Files\requests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\channels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\linked_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\context.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

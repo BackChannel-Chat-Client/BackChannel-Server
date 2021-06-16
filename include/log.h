@@ -11,12 +11,12 @@
 
 #include "common.h"
 
-#define BcLog( log ) (BcLogEx(stdout, log))
+#define BcLog( log ) (BcLogEx(log))
 #define BcError( lpError ) (BcErrorEx(stderr, lpError, __FILE__, __LINE__))
 #define BcFatalError( lpError ) (BcFatalErrorEx(stderr, lpError, __FILE__, __LINE__))
 
 void
-BcLogEx(FILE* output_stream, const char* log);
+BcLogEx(const char* log);
 
 /*
 	Prints out an error to the stderr stream

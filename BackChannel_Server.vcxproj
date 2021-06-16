@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -164,6 +164,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\channels.c" />
+    <ClCompile Include="src\context.c" />
+    <ClCompile Include="src\linked_list.c" />
     <ClCompile Include="src\log.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\networking.c" />
@@ -172,7 +175,10 @@
     <ClCompile Include="src\threads.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\channels.h" />
     <ClInclude Include="include\common.h" />
+    <ClInclude Include="include\context.h" />
+    <ClInclude Include="include\linked_list.h" />
     <ClInclude Include="include\log.h" />
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\networking.h" />

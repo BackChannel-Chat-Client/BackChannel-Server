@@ -69,10 +69,10 @@ Bc_Platform_AppendToFile(const char* filename, const char* data)
 }
 
 void
-BcLogEx(FILE* output_stream, const char* log)
+BcLogEx(const char* log)
 {
 #ifdef _DEBUG
-	puts(output_stream);
+	puts(log);
 #else
 	/*
 		TODO: Implement logging to files
