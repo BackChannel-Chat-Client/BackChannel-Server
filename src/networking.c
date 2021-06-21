@@ -90,7 +90,7 @@ BcInitializeNet(void)
 }
 
 BC_STATUS
-BcHandleNewConnections(unsigned short port)
+BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port)
 {
 	BC_STATUS bcResult = 0;
 	struct sockaddr_in lpServerInfo = { 0 };
@@ -100,6 +100,9 @@ BcHandleNewConnections(unsigned short port)
 	SOCKET clientSock = 0;
 	P_BC_CONNECTION bcConnection = NULL;
 	HANDLE thread_handle = NULL;
+
+	if (!bc_context)
+		return BC_INVALID_PARAM;
 
 	/*
 		Create the server socket
@@ -164,6 +167,7 @@ BcHandleNewConnections(unsigned short port)
 		*/
 		bcConnection->sock = clientSock;
 		bcConnection->connInfo = lpClientInfo;
+		bcConnection->bc_context = bc_context;
 		bcConnection->bc_errno = BC_SUCCESS;
 
 		/*

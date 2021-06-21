@@ -24,6 +24,9 @@ BC_STATUS BcChanRegisterChannel(P_BC_CONTEXT context, char* channel_name, uint32
 		return BC_INVALID_CONTEXT;
 	}
 
+	/*
+		Assign members
+	*/
 	(*channel)->channel_name = channel_name;
 	(*channel)->channel_id = context->channel_count;
 	(*channel)->max_messages = max_messages;

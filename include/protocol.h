@@ -26,6 +26,7 @@
 	Request includes	
 */
 #include "requests/BACKCHANNEL_REQ_GET_ERRNO.h"
+#include "requests/BACKCHANNEL_REQ_GET_CHANNELS.h"
 
 /*
 	Request types

@@ -11,10 +11,16 @@ BC_STATUS BcCtxInit(P_BC_CONTEXT *bc_context, uint32_t max_channels)
 	if (!bc_context || max_channels == 0)
 		return BC_INVALID_PARAM;
 
+	/*
+		Allocate context
+	*/
 	context = malloc(sizeof(*context));
 	if (context == NULL)
 		BcFatalError("Failed to allocate memory");
 
+	/*
+		Allocate channel list with the max number of channels
+	*/
 	context->channel_list = malloc(sizeof(*(context->channel_list)) * max_channels);
 	if (context->channel_list == NULL)
 		BcFatalError("Failed to allocate memory");

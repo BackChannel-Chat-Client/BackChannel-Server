@@ -48,6 +48,9 @@
     <ClCompile Include="src\context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_CHANNELS.c">
+      <Filter>Source Files\requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="include\context.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_CHANNELS.h">
+      <Filter>Header Files\requests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

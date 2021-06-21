@@ -121,6 +121,9 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	if (!conn->sock)
 		return BC_NOT_CONNECTED;
 
+	if (!conn->bc_context)
+		return BC_INVALID_CONTEXT;
+
 	/*
 		Verify the request packet
 	*/
@@ -140,6 +143,9 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	{
 		case BACKCHANNEL_REQ_GET_ERRNO:
 			BcReqGetErrno(conn, packet);
+			break;
+		case BACKCHANNEL_REQ_GET_CHANNELS:
+			BcReqGetChannels(conn, packet);
 			break;
 		default: /* Unimplemented request */
 			conn->bc_errno = BC_UNIMPLEMENTED;
@@ -204,7 +210,7 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 	/*
 		Response body
 	*/
-	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id) + sizeof(resp_status), resp_body, strlen(resp_body)+1);
+	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id) + sizeof(resp_status), resp_body, resp_body_size);
 
 	/*
 		TODO: send takes an int as input. This may be an issue if the resp_size

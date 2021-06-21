@@ -48,7 +48,7 @@ int main(size_t argc, char** argv)
 	/*
 		Begin handling new connections
 	*/
-	bcResult = BcHandleNewConnections(port);
+	bcResult = BcHandleNewConnections(context, port);
 	if (bcResult != BC_SUCCESS)
 		BcFatalError("Failed to handle connections");
 

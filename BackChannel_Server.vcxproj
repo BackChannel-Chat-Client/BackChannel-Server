@@ -171,6 +171,7 @@
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\networking.c" />
     <ClCompile Include="src\protocol.c" />
+    <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_CHANNELS.c" />
     <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_ERRNO.c" />
     <ClCompile Include="src\threads.c" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="include\protocol.h" />
     <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_ERRNO.h" />
     <ClInclude Include="include\threads.h" />
+    <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_CHANNELS.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -77,7 +77,8 @@ BcLogEx(const char* log)
 	/*
 		TODO: Implement logging to files
 	*/
-	Bc_Platform_AppendToFile("log.txt", log);
+	puts(log);
+	//Bc_Platform_AppendToFile("log.txt", log);
 #endif
 }
 
