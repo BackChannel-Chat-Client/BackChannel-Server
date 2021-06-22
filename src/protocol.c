@@ -163,7 +163,7 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 	if (!resp_body || !conn)
 		return BC_INVALID_PARAM;
 
-	if (!conn->sock)
+	if (!conn->ssl_state)
 		return BC_NOT_CONNECTED;
 
 	/*
@@ -216,7 +216,7 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 		TODO: send takes an int as input. This may be an issue if the resp_size
 			is bigger than INT_MAX, and also if the int type isn't 4 bytes on the compiled system
 	*/
-	send(conn->sock, send_buffer, resp_size, 0);
+	BcTlsSockSend(conn, send_buffer, resp_size, NULL);
 
 	free(send_buffer);
 

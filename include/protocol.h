@@ -21,6 +21,7 @@
 
 #include "networking.h"
 #include "log.h"
+#include "tls.h"
 
 /*
 	Request includes	

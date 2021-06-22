@@ -51,6 +51,9 @@
     <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_CHANNELS.c">
       <Filter>Source Files\requests</Filter>
     </ClCompile>
+    <ClCompile Include="src\tls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_CHANNELS.h">
       <Filter>Header Files\requests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tls.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
