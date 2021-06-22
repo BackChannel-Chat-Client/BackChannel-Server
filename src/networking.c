@@ -6,11 +6,11 @@ BcConnectionHandler(void* parameter)
 	BC_STATUS bcResult = 0;
 	char recv_buffer[4096] = { 0 };
 	int bytes_received = 0;
-	P_BC_CONNECTION bcConnection = NULL;
+	P_BC_CONNECTION conn = NULL;
 	BC_REQ_PACKET bcPacket = { 0 };
 	
-	bcConnection = (P_BC_CONNECTION)parameter;
-	if (!bcConnection)
+	conn = (P_BC_CONNECTION)parameter;
+	if (!conn)
 	{
 		BcError("BcConnectionHandler received a null connection pointer");
 		return;
@@ -26,7 +26,7 @@ BcConnectionHandler(void* parameter)
 	*/
 	memset(recv_buffer, 0, sizeof(recv_buffer));
 
-	while ((bytes_received = recv(bcConnection->sock, recv_buffer, sizeof(recv_buffer), 0)) > 0)
+	while (BcTlsSockRecv(conn, recv_buffer, sizeof(recv_buffer), &bytes_received) == BC_SUCCESS)
 	{
 		/*
 			NULL-Terminate the buffer. If recv receives 4096 bytes, it is not guaranteed
@@ -55,7 +55,7 @@ BcConnectionHandler(void* parameter)
 					bcPacket.auth_key,
 					bcPacket.req_body);
 
-		BcHandleRequest(bcConnection, &bcPacket);
+		BcHandleRequest(conn, &bcPacket);
 
 		free(bcPacket.auth_key);
 		free(bcPacket.req_body);
@@ -63,8 +63,8 @@ BcConnectionHandler(void* parameter)
 		memset(recv_buffer, 0, sizeof(recv_buffer));
 	}
 
-	closesocket(bcConnection->sock);
-	free(bcConnection);
+	closesocket(conn->sock);
+	free(conn);
 }
 
 BC_STATUS
@@ -106,7 +106,7 @@ BcInitializeNet(void)
 }
 
 BC_STATUS
-BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port)
+BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned short port)
 {
 	BC_STATUS bcResult = 0;
 	struct sockaddr_in lpServerInfo = { 0 };
@@ -114,7 +114,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port)
 	int sockaddr_in_size = sizeof(struct sockaddr_in);
 	SOCKET serverSock = 0;
 	SOCKET clientSock = 0;
-	P_BC_CONNECTION bcConnection = NULL;
+	P_BC_CONNECTION conn = NULL;
 	HANDLE thread_handle = NULL;
 
 	if (!bc_context)
@@ -169,8 +169,8 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port)
 		/*
 			Allocate new BC_CONNECTION struct
 		*/
-		bcConnection = malloc(sizeof(BC_CONNECTION));
-		if (!bcConnection)
+		conn = malloc(sizeof(BC_CONNECTION));
+		if (!conn)
 		{
 			BcError("Failed to allocate connection struct");
 			closesocket(clientSock);
@@ -181,20 +181,34 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port)
 		/*
 			Set struct members
 		*/
-		bcConnection->sock = clientSock;
-		bcConnection->connInfo = lpClientInfo;
-		bcConnection->bc_context = bc_context;
-		bcConnection->bc_errno = BC_SUCCESS;
+		conn->sock = clientSock;
+		conn->ssl_state = NULL;
+		conn->connInfo = lpClientInfo;
+		conn->bc_context = bc_context;
+		conn->bc_errno = BC_SUCCESS;
+
+		/*
+			Negotiate TLS encryption
+		*/
+		bcResult = BcTlsInitializeConnection(tls_context, conn);
+		if (bcResult != BC_SUCCESS)
+		{
+			BcError("Could not negotiate TLS encryption");
+			closesocket(conn->sock);
+			free(conn);
+
+			continue;
+		}
 
 		/*
 			Start a new thread to handle connection
 		*/
-		bcResult = Bc_Platform_StartThread(BcConnectionHandler, bcConnection, &thread_handle);
+		bcResult = Bc_Platform_StartThread(BcConnectionHandler, conn, &thread_handle);
 		if (bcResult != BC_SUCCESS)
 		{
 			BcError("Failed to start connection thread");
-			closesocket(bcConnection->sock);
-			free(bcConnection);
+			closesocket(conn->sock);
+			free(conn);
 
 			continue;
 		}

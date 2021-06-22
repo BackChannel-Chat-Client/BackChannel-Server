@@ -20,13 +20,15 @@
 #include "threads.h"
 #include "protocol.h"
 #include "context.h"
+#include "tls.h"
 
 typedef struct _BC_CONNECTION
 {
-	SOCKET sock;
+	SOCKET			sock;
+	SSL*			ssl_state;
 	struct sockaddr connInfo;
-	uint32_t bc_errno;
-	P_BC_CONTEXT bc_context;
+	uint32_t		bc_errno;
+	P_BC_CONTEXT	bc_context;
 } BC_CONNECTION, *P_BC_CONNECTION;
 
 BC_STATUS
@@ -36,4 +38,4 @@ BC_STATUS
 BcInitializeNet(void);
 
 BC_STATUS
-BcHandleNewConnections(P_BC_CONTEXT bc_context, unsigned short port);
+BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned short port);
