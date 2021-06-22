@@ -1,4 +1,4 @@
-#include "BACKCHANNEL_REQ_GET_CHANNELS.h"
+#include "requests/BACKCHANNEL_REQ_GET_CHANNELS.h"
 
 BC_STATUS
 BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)

@@ -14,7 +14,7 @@ BcReqGetErrno(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	if (BcVerifyRequestPacket(packet) != BC_SUCCESS)
 	{
 		conn->bc_errno = BC_INVALID_PACKET;
-		BcSendResponse(conn, BACKCHANNEL_REQ_ERROR, conn->bc_errno, "", 1);
+		BcSendResponse(conn, BC_REQ_ERROR, conn->bc_errno, "", 1);
 		return BC_INVALID_PACKET;
 	}
 
