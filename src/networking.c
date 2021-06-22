@@ -18,6 +18,14 @@ BcConnectionHandler(void* parameter)
 
 	BcLog("[+] Got new connection");
 
+	/*
+		So, if the packet only has 1 string in it, strdup in BcParseRequest may do some funny shit,
+		so if we set the whole buffer to 0, we avoid this issue.
+
+		TODO: Maybe put checks into BcParseRequest in the future
+	*/
+	memset(recv_buffer, 0, sizeof(recv_buffer));
+
 	while ((bytes_received = recv(bcConnection->sock, recv_buffer, sizeof(recv_buffer), 0)) > 0)
 	{
 		/*
@@ -26,6 +34,9 @@ BcConnectionHandler(void* parameter)
 		*/
 		recv_buffer[4095] = 0;
 
+		/*
+			Parse the request into a packet structure.
+		*/
 		bcResult = BcParseRequest(recv_buffer, bytes_received, &bcPacket);
 		if (bcResult != BC_SUCCESS)
 		{
@@ -33,6 +44,9 @@ BcConnectionHandler(void* parameter)
 			continue;
 		}
 
+		/*
+			TODO: Make this into a logging function
+		*/
 		printf("packet_size: %d\npacket_id: %d\nchannel_id: %d\nreq_type: 0x%x\nauth_key: %s\nreq_body: %s\n", 
 					bcPacket.packet_size,
 					bcPacket.packet_id,
@@ -45,6 +59,8 @@ BcConnectionHandler(void* parameter)
 
 		free(bcPacket.auth_key);
 		free(bcPacket.req_body);
+
+		memset(recv_buffer, 0, sizeof(recv_buffer));
 	}
 
 	closesocket(bcConnection->sock);
