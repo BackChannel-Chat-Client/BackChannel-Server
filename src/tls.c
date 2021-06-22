@@ -1,4 +1,5 @@
 #include "tls.h"
+#include <openssl/applink.c>
 
 BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 {
