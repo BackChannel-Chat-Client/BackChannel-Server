@@ -163,7 +163,7 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 	if (!resp_body || !conn)
 		return BC_INVALID_PARAM;
 
-	if (!conn->sock)
+	if (!conn->ssl_state)
 		return BC_NOT_CONNECTED;
 
 	/*
