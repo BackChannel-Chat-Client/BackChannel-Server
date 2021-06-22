@@ -64,6 +64,8 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		if (!respBuffer)
 			BcFatalError("Failed to allocate memory");
 
+		memset(respBuffer, 0, respBufferSize);
+
 		/*
 			Put channel members into the buffer
 		*/
