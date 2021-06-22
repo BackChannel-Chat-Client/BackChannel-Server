@@ -7,6 +7,7 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	P_BC_CHANNEL tempChannel = NULL;
 	uint32_t channelNameSize = 0;
 	uint32_t respBufferSize = 0;
+	uint32_t status_code = 0;
 	
 	if (!conn || !packet)
 		return BC_INVALID_PARAM;
@@ -83,18 +84,21 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		);
 
 		/*
+			If there are more channels to send, set status to be BC_MORE_DATA. 
+		*/
+		if (i != conn->bc_context->channel_count - 1)
+			status_code = BC_MORE_DATA;
+		else
+			status_code = BC_SUCCESS;
+
+		/*
 			Send Response
 		*/
-		BcSendResponse(conn, packet->packet_id, BC_MORE_DATA, respBuffer, respBufferSize);
+		BcSendResponse(conn, packet->packet_id, status_code, respBuffer, respBufferSize);
 
 		free(respBuffer);
 		respBuffer = NULL;
 	}
-
-	/*
-		Send success when there is no more data
-	*/
-	BcSendResponse(conn, packet->packet_id, BC_SUCCESS, "", 1);
 
 	return BC_SUCCESS;
 
