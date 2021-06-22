@@ -7,7 +7,7 @@ This packet is sent from the BackChannel server to the client in response to a [
 | Packet Size (`packet_size`)     | 32-bit unsigned integer      | The size of the packet info and body |
 | Packet ID (`packet_id`)         | 32-bit unsigned integer      | The packet ID of the request packet  |
 | Response Status (`resp_status`) | 32-bit unsigned integer      | The status code of the request       |
-| Response Body (`resp_body`)     | NULL-Terminated ASCII string | The response body                    |
+| Response Body (`resp_body`)     | NULL-Terminated binary data | The response body                    |
 
 This can be represented in C as
 
