@@ -34,7 +34,15 @@ int main(size_t argc, char** argv)
 		Register example channel
 		TODO: Register channels based on config file
 	*/
-	bcResult = BcChanRegisterChannel(context, "ExampleChannel", 500, &chan);
+	bcResult = BcChanRegisterChannel(context, "ExampleChannel1", 500, &chan);
+	if (bcResult != BC_SUCCESS)
+		BcFatalError("Failed to register channel");
+
+	bcResult = BcChanRegisterChannel(context, "ExampleChannel2", 500, &chan);
+	if (bcResult != BC_SUCCESS)
+		BcFatalError("Failed to register channel");
+
+	bcResult = BcChanRegisterChannel(context, "ExampleChannel3", 500, &chan);
 	if (bcResult != BC_SUCCESS)
 		BcFatalError("Failed to register channel");
 
