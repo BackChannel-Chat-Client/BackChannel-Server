@@ -182,7 +182,7 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 		resp_body_size = UINT32_MAX - BC_MINIMUM_RESPONSE_PACKET_SIZE - 1;
 	}
 
-	uint32_t resp_size = BC_MINIMUM_RESPONSE_PACKET_SIZE + resp_body_size;
+	uint32_t resp_size = BC_MINIMUM_RESPONSE_PACKET_SIZE + resp_body_size - 1;
 
 	char* send_buffer = malloc(resp_size);
 	if (!send_buffer)
