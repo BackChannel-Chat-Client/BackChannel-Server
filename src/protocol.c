@@ -193,32 +193,24 @@ BcSendResponse(P_BC_CONNECTION conn, uint32_t packet_id, uint32_t resp_status, c
 	}
 
 	/*
-		We convert to network order because it's better for clients to parse out.
-		recv converts the data to the host system's endianness, but the integers don't get converted back with the data.
-	*/
-
-	/*
 		Response Packet Size
 	*/
-	uint32_t nl_resp_size = htonl(resp_size);
-	memcpy(send_buffer, &nl_resp_size, sizeof(nl_resp_size));
+	memcpy(send_buffer, &resp_size, sizeof(resp_size));
 		
 	/*
 		Packet ID
 	*/
-	uint32_t nl_packet_id = htonl(packet_id);
-	memcpy(send_buffer + sizeof(nl_resp_size), &nl_packet_id, sizeof(nl_packet_id));
+	memcpy(send_buffer + sizeof(resp_size), &packet_id, sizeof(packet_id));
 
 	/*
 		Response status
 	*/
-	uint32_t nl_resp_status = htonl(resp_status);
-	memcpy(send_buffer + sizeof(nl_resp_size) + sizeof(nl_packet_id), &nl_resp_status, sizeof(nl_resp_status));
+	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id), &resp_status, sizeof(resp_status));
 
 	/*
 		Response body
 	*/
-	memcpy(send_buffer + sizeof(nl_resp_size) + sizeof(nl_packet_id) + sizeof(nl_resp_status), resp_body, resp_body_size);
+	memcpy(send_buffer + sizeof(resp_size) + sizeof(packet_id) + sizeof(resp_status), resp_body, resp_body_size);
 
 	/*
 		TODO: send takes an int as input. This may be an issue if the resp_size
