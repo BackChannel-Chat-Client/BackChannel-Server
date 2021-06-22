@@ -6,13 +6,16 @@
 #include "common.h"
 #include "networking.h"
 
-__forceinline void BcTlsInitOpenssl()
+/* There has to be a better way to do this */
+typedef struct _BC_CONNECTION* P_BC_CONNECTION;
+
+__forceinline void BcTlsInitOpenssl(void)
 {
     SSL_load_error_strings();
     OpenSSL_add_ssl_algorithms();
 }
 
-__forceinline void BcTlsCleanupOpenssl()
+__forceinline void BcTlsCleanupOpenssl(void)
 {
     EVP_cleanup();
 }
@@ -27,6 +30,6 @@ BC_STATUS BcTlsDebugShowClientX509Certificate(P_BC_CONNECTION conn);
 
 BC_STATUS BcTlsInitializeConnection(SSL_CTX* tls_context, P_BC_CONNECTION conn);
 
-BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, size_t data_size, int* bytes_written);
+BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, int data_size, int* bytes_written);
 
-BC_STATUS BcTlsSockRecv(P_BC_CONNECTION conn, char* buffer, size_t buffer_size, int* bytes_received);
+BC_STATUS BcTlsSockRecv(P_BC_CONNECTION conn, char* buffer, int buffer_size, int* bytes_received);

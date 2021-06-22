@@ -8,7 +8,7 @@ BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 	if (!tls_context)
 		return BC_INVALID_PARAM;
 	
-	method = TLSv1_2_server_method();  /* create new server-method instance */
+	method = (SSL_METHOD*)TLSv1_2_server_method();  /* create new server-method instance */
 	ctx = SSL_CTX_new(method);   /* create new context from method */
 	if (ctx == NULL)
 	{
@@ -23,6 +23,8 @@ BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 
 BC_STATUS BcTlsConfigureContext(SSL_CTX* tls_context)
 {
+	BC_UNREFERENCED_PARAMETER(tls_context);
+
 	return BC_UNIMPLEMENTED;
 }
 
@@ -115,7 +117,7 @@ BC_STATUS BcTlsInitializeConnection(SSL_CTX* tls_context, P_BC_CONNECTION conn)
 	/*
 		Set SSL file descriptor to our open connection
 	*/
-	SSL_set_fd(ssl, conn->sock);
+	SSL_set_fd(ssl, (int)conn->sock);
 
 	/* 
 		do SSL-protocol accept 
@@ -132,7 +134,7 @@ BC_STATUS BcTlsInitializeConnection(SSL_CTX* tls_context, P_BC_CONNECTION conn)
 	return BC_SUCCESS;
 }
 
-BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, size_t data_size, int* bytes_written)
+BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, int data_size, int* bytes_written)
 {
 	int result = 0;
 	
@@ -155,7 +157,7 @@ BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, size_t data_size, int*
 	return BC_SUCCESS;
 }
 
-BC_STATUS BcTlsSockRecv(P_BC_CONNECTION conn, char* buffer, size_t buffer_size, int* bytes_received)
+BC_STATUS BcTlsSockRecv(P_BC_CONNECTION conn, char* buffer, int buffer_size, int* bytes_received)
 {
 	int result = 0;
 	
