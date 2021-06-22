@@ -65,16 +65,21 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 
 		/*
 			Put channel members into the buffer
+			
+			We convert to network order because it's better for clients to parse out.
+			recv converts the data to the host system's endianness, but the integers don't get converted back with the data
 		*/
-		memcpy(respBuffer, &tempChannel->channel_id, sizeof(tempChannel->channel_id));
+		uint32_t nl_channel_id = htonl(tempChannel->channel_id);
+		memcpy(respBuffer, &nl_channel_id, sizeof(nl_channel_id));
 
-		memcpy(respBuffer + sizeof(tempChannel->channel_id), &tempChannel->max_messages, sizeof(tempChannel->max_messages));
+		uint32_t nl_max_messages = htonl(tempChannel->max_messages);
+		memcpy(respBuffer + sizeof(nl_channel_id), &nl_max_messages, sizeof(nl_max_messages));
 
 		strncpy_s(
-			respBuffer + sizeof(tempChannel->channel_id) + sizeof(tempChannel->max_messages), 
-			respBufferSize - sizeof(tempChannel->channel_id) - sizeof(tempChannel->max_messages),
+			respBuffer + sizeof(nl_channel_id) + sizeof(nl_max_messages),
+			respBufferSize - sizeof(nl_channel_id) - sizeof(nl_max_messages),
 			tempChannel->channel_name,
-			respBufferSize - sizeof(tempChannel->channel_id) - sizeof(tempChannel->max_messages)
+			respBufferSize - sizeof(nl_channel_id) - sizeof(nl_max_messages)
 		);
 
 		/*
