@@ -68,6 +68,7 @@ int main(size_t argc, char** argv)
 
 	/*
 		Load X509 Certificates
+		TODO: Grab paths from config file
 	*/
 	bcResult = BcTlsLoadX509Certificates(tls_context, "temp_cert.pem", "temp_key.pem");
 	if (bcResult != BC_SUCCESS)
