@@ -7,7 +7,7 @@ LIBS=-lcrypto -lssl
 CC=gcc
 CFLAGS=-Wall -I$(INCDIR) -L$(LIBDIR) $(LIBS)
 
-CFILES = main.c
+CFILES = $(shell find . -name '*.c')
 OBJ = $(CFILES:.c=.o)
 DEPS = $(wildcard $(INCDIR)*.h)
 
