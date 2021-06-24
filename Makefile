@@ -5,7 +5,7 @@ SRCDIR=src
 LIBS=-lcrypto -lssl -lpthread
 
 CC=gcc
-CFLAGS=-Wall -I$(INCDIR) -L$(LIBDIR) $(LIBS)
+CFLAGS=-Wall -Wno-unused-value -I$(INCDIR) -L$(LIBDIR) $(LIBS)
 
 CFILES = $(shell find ./src -name '*.c')
 OBJ = $(CFILES:.c=.o)
