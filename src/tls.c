@@ -23,7 +23,7 @@ BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 	if (!tls_context)
 		return BC_INVALID_PARAM;
 	
-	method = (SSL_METHOD*)TLSv1_2_server_method();  /* create new server-method instance */
+	method = (SSL_METHOD*)TLS_server_method();  /* create new server-method instance */
 	ctx = SSL_CTX_new(method);   /* create new context from method */
 	if (ctx == NULL)
 	{
