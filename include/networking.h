@@ -4,9 +4,10 @@
 	#include <WinSock2.h>
 	#pragma comment(lib, "ws2_32.lib")
 #elif __unix__
-	#include<sys/socket.h>
-	#include<netdb.h>
-	#include<arpa/inet.h>
+	#include <sys/socket.h>
+	#include <netdb.h>
+	#include <arpa/inet.h>
+    #include <unistd.h>
 
 	typedef int SOCKET;
     
@@ -35,6 +36,9 @@ typedef struct _BC_CONNECTION
 
 BC_STATUS
 BcNetSendUint32(P_BC_CONNECTION conn, uint32_t status);
+
+BC_STATUS
+BcNetCloseSocket(SOCKET sock);
 
 BC_STATUS
 BcInitializeNet(void);
