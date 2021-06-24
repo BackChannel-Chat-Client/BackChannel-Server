@@ -2,6 +2,7 @@ INCDIR=include
 LIBDIR=lib
 OBJDIR=build
 SRCDIR=src
+BINDIR=bin
 LIBS=-lcrypto -lssl -lpthread
 
 CC=gcc
@@ -15,7 +16,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 backchannel-server: $(OBJ)
-	$(CC) -o $@ $(OBJ) $(CFLAGS)
+	mkdir -p bin
+	$(CC) -o $(BINDIR)/$@ $(OBJ) $(CFLAGS)
 
 all: clean backchannel-server
 	echo "[+] Build complete"
