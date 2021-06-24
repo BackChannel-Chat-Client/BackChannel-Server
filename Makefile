@@ -2,7 +2,7 @@ INCDIR=include
 LIBDIR=lib
 OBJDIR=build
 SRCDIR=src
-LIBS=-lcrypto -lssl -lpthread
+LIBS=-lcrypto -lssl
 
 CC=gcc
 CFLAGS=-Wall -I$(INCDIR) -L$(LIBDIR) $(LIBS)

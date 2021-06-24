@@ -1,11 +1,5 @@
 #include "tls.h"
-
-/*
-    Dont ask me why but apparently this is needed on windows
-*/
-#ifdef _WIN32
 #include <openssl/applink.c>
-#endif
 
 void BcTlsInitOpenssl(void)
 {
