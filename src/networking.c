@@ -30,9 +30,10 @@ BcConnectionHandler(void* parameter)
 	{
 		/*
 			NULL-Terminate the buffer. If recv receives 4096 bytes, it is not guaranteed
-			that the final byte is the null byte of the req_body member.
+			that the final 2 bytes will be the null bytes of the string members.
 		*/
 		recv_buffer[4095] = 0;
+        recv_buffer[4094] = 0;
 
 		/*
 			Parse the request into a packet structure.
