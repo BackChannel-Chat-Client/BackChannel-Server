@@ -63,6 +63,7 @@ BcConnectionHandler(void* parameter)
 		memset(recv_buffer, 0, sizeof(recv_buffer));
 	}
 
+    BcLog("[/] Exiting connection");
 	BcNetCloseSocket(conn->sock);
 	free(conn);
 }

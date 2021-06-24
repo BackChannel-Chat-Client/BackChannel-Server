@@ -23,7 +23,7 @@ Bc_Platform_StartThread(BC_THREAD_PROC thread_proc, void* parameter, BC_THREAD* 
 
 #else
     int result = pthread_create(
-            thread_handle,
+            &thread_handle,
             NULL,
             thread_proc,
             parameter);

@@ -17,6 +17,9 @@ DEPS = $(wildcard $(INCDIR)*.h)
 backchannel-server: $(OBJ)
 	$(CC) -o $@ $(OBJ) $(CFLAGS) $(LIBS)
 
-all: backchannel-server
+all: clean backchannel-server
 	echo $(DEPS)
 	echo "[+] Build complete"
+
+clean: 
+	rm -rf src/*.o
