@@ -1,5 +1,11 @@
 #include "tls.h"
+
+/*
+    Dont ask me why but apparently this is needed on windows
+*/
+#ifdef _WIN32
 #include <openssl/applink.c>
+#endif
 
 BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 {
