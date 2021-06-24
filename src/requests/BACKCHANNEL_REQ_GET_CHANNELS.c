@@ -73,9 +73,8 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 
 		memcpy(respBuffer + sizeof(tempChannel->channel_id), &tempChannel->max_messages, sizeof(tempChannel->max_messages));
 
-		strncpy_s(
+		strncpy(
 			respBuffer + sizeof(tempChannel->channel_id) + sizeof(tempChannel->max_messages),
-			respBufferSize - sizeof(tempChannel->channel_id) - sizeof(tempChannel->max_messages),
 			tempChannel->channel_name,
 			respBufferSize - sizeof(tempChannel->channel_id) - sizeof(tempChannel->max_messages)
 		);
