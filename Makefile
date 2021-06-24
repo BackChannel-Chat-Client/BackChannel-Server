@@ -9,17 +9,16 @@ CFLAGS=-Wall -I$(INCDIR) -L$(LIBDIR) $(LIBS)
 
 CFILES = $(shell find ./src -name '*.c')
 OBJ = $(CFILES:.c=.o)
-DEPS = $(wildcard $(INCDIR)*.h)
+DEPS = $(shell find ./include -name '*.h')
 
-%.o: $(SRCDIR)/%.c $(DEPS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 backchannel-server: $(OBJ)
-	$(CC) -o $@ $(OBJ) $(CFLAGS) $(LIBS)
+	$(CC) -o $@ $(OBJ) $(CFLAGS)
 
 all: clean backchannel-server
-	echo $(DEPS)
 	echo "[+] Build complete"
 
-clean: 
-	rm -rf src/*.o
+clean:
+	rm -rf $(OBJ)
