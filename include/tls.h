@@ -9,16 +9,9 @@
 /* There has to be a better way to do this */
 typedef struct _BC_CONNECTION* P_BC_CONNECTION;
 
-inline void BcTlsInitOpenssl(void)
-{
-    SSL_load_error_strings();
-    OpenSSL_add_ssl_algorithms();
-}
+void BcTlsInitOpenssl(void);
 
-inline void BcTlsCleanupOpenssl(void)
-{
-    EVP_cleanup();
-}
+void BcTlsCleanupOpenssl(void);
 
 BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context);
 

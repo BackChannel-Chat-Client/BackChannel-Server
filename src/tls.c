@@ -7,6 +7,17 @@
 #include <openssl/applink.c>
 #endif
 
+void BcTlsInitOpenssl(void)
+{
+    SSL_load_error_strings();
+    OpenSSL_add_ssl_algorithms();
+}
+
+void BcTlsCleanupOpenssl(void)
+{
+    EVP_cleanup();
+}
+
 BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 {
 	SSL_METHOD* method;
