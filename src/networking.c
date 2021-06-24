@@ -154,7 +154,6 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 	{
 		/*
 			Accept new connection
-			TODO: Add a POSIX form of INVALID_SOCKET to the defines
 		*/
 		clientSock = accept(serverSock, &lpClientInfo, &sockaddr_in_size);
 		if (clientSock == INVALID_SOCKET)

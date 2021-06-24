@@ -9,6 +9,8 @@
 	#include<arpa/inet.h>
 
 	typedef int SOCKET;
+    
+    #define INVALID_SOCKET -1
 #endif
 
 #include <stdio.h>
