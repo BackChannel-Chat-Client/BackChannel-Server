@@ -63,7 +63,8 @@ BcConnectionHandler(void* parameter)
 		memset(recv_buffer, 0, sizeof(recv_buffer));
 	}
 
-	closesocket(conn->sock);
+    BcLog("[/] Exiting connection");
+	BcNetCloseSocket(conn->sock);
 	free(conn);
 }
 
@@ -85,6 +86,18 @@ BcNetSendUint32(P_BC_CONNECTION conn, uint32_t status)
 	}
 
 	return BC_SUCCESS;
+}
+
+BC_STATUS
+BcNetCloseSocket(SOCKET sock)
+{
+    #ifdef _WIN32
+        closesocket(sock);
+    #else
+        close(sock);
+    #endif
+
+    return BC_SUCCESS;
 }
 
 BC_STATUS
@@ -115,7 +128,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 	SOCKET serverSock = 0;
 	SOCKET clientSock = 0;
 	P_BC_CONNECTION conn = NULL;
-	HANDLE thread_handle = NULL;
+	BC_THREAD thread_handle = NULL;
 
 	if (!bc_context)
 		return BC_INVALID_PARAM;
@@ -154,7 +167,6 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 	{
 		/*
 			Accept new connection
-			TODO: Add a POSIX form of INVALID_SOCKET to the defines
 		*/
 		clientSock = accept(serverSock, &lpClientInfo, &sockaddr_in_size);
 		if (clientSock == INVALID_SOCKET)
@@ -173,7 +185,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 		if (!conn)
 		{
 			BcError("Failed to allocate connection struct");
-			closesocket(clientSock);
+			BcNetCloseSocket(clientSock);
 			
 			continue;
 		}
@@ -194,7 +206,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 		if (bcResult != BC_SUCCESS)
 		{
 			BcError("Could not negotiate TLS encryption");
-			closesocket(conn->sock);
+			BcNetCloseSocket(conn->sock);
 			free(conn);
 
 			continue;
@@ -207,7 +219,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 		if (bcResult != BC_SUCCESS)
 		{
 			BcError("Failed to start connection thread");
-			closesocket(conn->sock);
+			BcNetCloseSocket(conn->sock);
 			free(conn);
 
 			continue;

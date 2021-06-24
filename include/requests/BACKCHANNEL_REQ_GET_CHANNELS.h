@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <WinSock2.h>
 
 #include "common.h"
 

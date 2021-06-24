@@ -5,7 +5,7 @@
 	typedef void(WINAPI* BC_THREAD_PROC)(LPVOID lpParameter);
 #else
 	#include <pthread.h>
-	typedef void(* BC_THREAD_PROC)(void* lpParameter);
+	typedef void*(* BC_THREAD_PROC)(void* lpParameter);
 #endif
 
 #include "common.h"

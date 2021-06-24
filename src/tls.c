@@ -1,5 +1,19 @@
 #include "tls.h"
+
+#ifdef _WIN32
 #include <openssl/applink.c>
+#endif
+
+void BcTlsInitOpenssl(void)
+{
+    SSL_load_error_strings();
+    OpenSSL_add_ssl_algorithms();
+}
+
+void BcTlsCleanupOpenssl(void)
+{
+    EVP_cleanup();
+}
 
 BC_STATUS BcTlsCreateContext(SSL_CTX** tls_context)
 {
@@ -150,7 +164,10 @@ BC_STATUS BcTlsSockSend(P_BC_CONNECTION conn, char* data, int data_size, int* by
 	*/
 	result = SSL_write(conn->ssl_state, data, data_size);
 	if (result <= 0)
+	{
+        ERR_print_errors_fp(stderr);
 		return BC_TLS_IO_ERROR;
+    }
 
 	if (bytes_written)
 		*bytes_written = result;
@@ -170,7 +187,10 @@ BC_STATUS BcTlsSockRecv(P_BC_CONNECTION conn, char* buffer, int buffer_size, int
 
 	result = SSL_read(conn->ssl_state, buffer, buffer_size);
 	if (result <= 0)
+	{
+        ERR_print_errors_fp(stderr);
 		return BC_TLS_IO_ERROR;
+    }
 
 	if (bytes_received)
 		*bytes_received = result;
