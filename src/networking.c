@@ -115,7 +115,7 @@ BcHandleNewConnections(P_BC_CONTEXT bc_context, SSL_CTX* tls_context, unsigned s
 	SOCKET serverSock = 0;
 	SOCKET clientSock = 0;
 	P_BC_CONNECTION conn = NULL;
-	HANDLE thread_handle = NULL;
+	BC_THREAD thread_handle = NULL;
 
 	if (!bc_context)
 		return BC_INVALID_PARAM;
