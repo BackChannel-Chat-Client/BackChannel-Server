@@ -2,12 +2,12 @@ INCDIR=include
 LIBDIR=lib
 OBJDIR=build
 SRCDIR=src
-LIBS=-lcrypto -lssl
+LIBS=-lcrypto -lssl -lpthread
 
 CC=gcc
 CFLAGS=-Wall -I$(INCDIR) -L$(LIBDIR) $(LIBS)
 
-CFILES = $(shell find . -name '*.c')
+CFILES = $(shell find ./src -name '*.c')
 OBJ = $(CFILES:.c=.o)
 DEPS = $(wildcard $(INCDIR)*.h)
 
