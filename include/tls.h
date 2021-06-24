@@ -9,13 +9,13 @@
 /* There has to be a better way to do this */
 typedef struct _BC_CONNECTION* P_BC_CONNECTION;
 
-__forceinline void BcTlsInitOpenssl(void)
+inline void BcTlsInitOpenssl(void)
 {
     SSL_load_error_strings();
     OpenSSL_add_ssl_algorithms();
 }
 
-__forceinline void BcTlsCleanupOpenssl(void)
+inline void BcTlsCleanupOpenssl(void)
 {
     EVP_cleanup();
 }
