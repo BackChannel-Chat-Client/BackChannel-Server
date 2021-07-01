@@ -354,3 +354,5 @@ MigrationBackup/
 # Don't include certs
 *.pem
 *.cert
+
+docs/.obsidian/
