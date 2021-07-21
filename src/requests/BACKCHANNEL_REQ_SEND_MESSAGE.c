@@ -25,6 +25,7 @@ BcReqSendMessage(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	/*
 		TODO: Verify auth key
 		TODO: Timeouts
+		TODO: Encryption
 	*/
 
 	/*
