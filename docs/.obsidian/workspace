@@ -131,10 +131,10 @@
   "lastOpenFiles": [
     "BackChannel Protocol/Request Types/BACKCHANNEL_REQ_SEND_MESSAGE.md",
     "BackChannel Protocol/Request Types/BACKCHANNEL_REQ_GET_CHANNELS.md",
+    "BackChannel Protocol/Response Packets.md",
     "BackChannel Protocol/Request Types/BackChannel Protocol Request Types.md",
     "BackChannel Protocol/Response Status Codes.md",
     "BackChannel Protocol/Request Packets.md",
-    "BackChannel Protocol/Response Packets.md",
     "BackChannel Protocol/BackChannel Protocol.md",
     "BackChannel Server.md",
     "BackChannel Protocol/Request Types/Untitled.md",

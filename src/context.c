@@ -36,7 +36,7 @@ BC_STATUS BcCtxInit(P_BC_CONTEXT *bc_context, uint32_t max_channels)
 		context->channel_list[i].channel_id = 0;
 		context->channel_list[i].channel_name = NULL;
 		context->channel_list[i].max_messages = 0;
-		context->channel_list[i].message_head = NULL;
+		context->channel_list[i].message_list = NULL;
 	}
 
 	*bc_context = context;

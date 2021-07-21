@@ -12,4 +12,12 @@ User's authentication key.
 Message to send to channel
 
 ## Response Parameters
-The response will contain the status code for the request.
+Check the status code for success.
+
+In the response body, the message ID for the newly created message is stored as binary data. See table below for details.
+
+| Data                          | Type                         | Description                                |
+| ----------------------------- | ---------------------------- | ------------------------------------------ |
+| Message ID     | 32-bit unsigned integer      | The ID for the newly created message                     |
+
+

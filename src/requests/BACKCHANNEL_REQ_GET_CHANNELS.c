@@ -97,5 +97,4 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	}
 
 	return BC_SUCCESS;
-
 }

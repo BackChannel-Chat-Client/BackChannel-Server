@@ -34,7 +34,13 @@ BC_STATUS BcChanRegisterChannel(P_BC_CONTEXT context, char* channel_name, uint32
 	/*
 		TODO: Implement messages
 	*/
-	// (*channel)->message_head = malloc(sizeof(*(channel->message_head)) * channel->max_messages);
+	(*channel)->message_list = malloc(sizeof(*(*channel)->message_list) * (*channel)->max_messages);
+	if (!(*channel)->message_list)
+		BcFatalError("Failed to allocate memory");
+
+	memset((*channel)->message_list, 0, sizeof(*(*channel)->message_list) * (*channel)->max_messages);
+
+	(*channel)->message_count = 0;
 
 	return BC_SUCCESS;
 }

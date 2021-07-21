@@ -3,9 +3,6 @@
 #ifdef _WIN32
 	#include <WinSock2.h>
 	#pragma comment(lib, "ws2_32.lib")
-
-	/* I hate MSVC */
-	#define strdup _strdup
 #elif __unix__
 	#include<sys/socket.h>
 	#include<netdb.h>
@@ -28,6 +25,7 @@
 */
 #include "requests/BACKCHANNEL_REQ_GET_ERRNO.h"
 #include "requests/BACKCHANNEL_REQ_GET_CHANNELS.h"
+#include "requests/BACKCHANNEL_REQ_SEND_MESSAGE.h"
 
 /*
 	Request types
@@ -47,6 +45,11 @@
 */
 #define BC_MINIMUM_REQUEST_PACKET_SIZE 15 
 #define BC_MINIMUM_RESPONSE_PACKET_SIZE 13
+
+#define BcRequestFail(conn, packet_id, errno)							\
+	conn->bc_errno = errno;									\
+	BcSendResponse(conn, packet_id, conn->bc_errno, "", 1);	\
+	return errno
 
 typedef struct _BC_REQ_PACKET
 {

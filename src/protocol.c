@@ -147,6 +147,9 @@ BcHandleRequest(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		case BACKCHANNEL_REQ_GET_CHANNELS:
 			BcReqGetChannels(conn, packet);
 			break;
+		case BACKCHANNEL_REQ_SEND_MESSAGE:
+			BcReqSendMessage(conn, packet);
+			break;
 		default: /* Unimplemented request */
 			conn->bc_errno = BC_UNIMPLEMENTED;
 			BcSendResponse(conn, packet->packet_id, conn->bc_errno, "", 1);
