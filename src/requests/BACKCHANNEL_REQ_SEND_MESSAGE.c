@@ -59,7 +59,7 @@ BcReqSendMessage(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		Add message to channel's message list
 	*/
 	channel->message_list[messageCount].id = channel->message_count;		/* Message ID */
-	channel->message_list[messageCount].time_sent = time(NULL);				/* Message timestamp */
+	channel->message_list[messageCount].time_sent = (uint32_t)time(NULL);				/* Message timestamp */
 	
 	channel->message_list[messageCount].body = strdup(packet->req_body);	/* Message Body */
 	if (channel->message_list[messageCount].body == NULL)
@@ -68,7 +68,7 @@ BcReqSendMessage(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		BcRequestFail(conn, packet->packet_id, BC_SERVER_ERROR);
 	}
 
-	channel->message_list[messageCount].size = strlen(channel->message_list[messageCount].body) + 1; /* Message body size*/
+	channel->message_list[messageCount].size = (uint32_t)(strlen(channel->message_list[messageCount].body) + 1); /* Message body size*/
 
 	/*
 		Copy new message ID into response buffer

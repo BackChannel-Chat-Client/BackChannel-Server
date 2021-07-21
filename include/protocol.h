@@ -8,7 +8,7 @@
 	#include<netdb.h>
 	#include<arpa/inet.h>
 
-	typedef int SOCKET;
+typedef int SOCKET;
 #endif
 
 #include <stdint.h>
@@ -21,7 +21,7 @@
 #include "tls.h"
 
 /*
-	Request includes	
+	Request includes
 */
 #include "requests/BACKCHANNEL_REQ_GET_ERRNO.h"
 #include "requests/BACKCHANNEL_REQ_GET_CHANNELS.h"
@@ -46,10 +46,12 @@
 #define BC_MINIMUM_REQUEST_PACKET_SIZE 15 
 #define BC_MINIMUM_RESPONSE_PACKET_SIZE 13
 
-#define BcRequestFail(conn, packet_id, errno)							\
-	conn->bc_errno = errno;									\
-	BcSendResponse(conn, packet_id, conn->bc_errno, "", 1);	\
-	return errno
+#define BcRequestFail(conn, packet_id, errno)					\
+	{															\
+		conn->bc_errno = errno;									\
+		BcSendResponse(conn, packet_id, conn->bc_errno, "", 1);	\
+		return errno;											\
+	}															\
 
 typedef struct _BC_REQ_PACKET
 {
