@@ -8,6 +8,7 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	uint32_t channelNameSize = 0;
 	uint32_t respBufferSize = 0;
 	uint32_t status_code = 0;
+	uint32_t numberOfChannelsSent = 0;
 	
 	if (!conn || !packet)
 		return BC_INVALID_PARAM;
@@ -29,17 +30,24 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 	}
 
 	/*
-		For each channel registered, send channel info to client.
+		For each channel slot, send channel info to client if channel exists.
 	*/
-	for (uint32_t i = 0; i < conn->bc_context->channel_count; i++)
+	for (uint32_t i = 0; i < conn->bc_context->max_channel_count; i++)
 	{
+
 		/*
-			If the channel isn't initialized, break.
+			If we have sent as many channels as there are channels registered, stop sending.
+		*/
+		if (numberOfChannelsSent >= conn->bc_context->channel_count)
+			break;
+
+		/*
+			If the channel isn't initialized, skip.
 		*/
 		tempChannel = &conn->bc_context->channel_list[i];
 		if (tempChannel->channel_id == 0)
 		{
-			break;
+			continue;
 		}
 
 		/*
@@ -82,7 +90,7 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 		/*
 			If there are more channels to send, set status to be BC_MORE_DATA. 
 		*/
-		if (i != conn->bc_context->channel_count - 1)
+		if (numberOfChannelsSent < conn->bc_context->channel_count)
 			status_code = BC_MORE_DATA;
 		else
 			status_code = BC_SUCCESS;
@@ -91,6 +99,8 @@ BcReqGetChannels(P_BC_CONNECTION conn, P_BC_REQ_PACKET packet)
 			Send Response
 		*/
 		BcSendResponse(conn, packet->packet_id, status_code, respBuffer, respBufferSize);
+
+		++numberOfChannelsSent;
 
 		free(respBuffer);
 		respBuffer = NULL;
