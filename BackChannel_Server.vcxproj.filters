@@ -54,6 +54,12 @@
     <ClCompile Include="src\tls.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\messages.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\requests\BACKCHANNEL_REQ_SEND_MESSAGE.c">
+      <Filter>Source Files\requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -91,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="include\tls.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\messages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\requests\BACKCHANNEL_REQ_SEND_MESSAGE.h">
+      <Filter>Header Files\requests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

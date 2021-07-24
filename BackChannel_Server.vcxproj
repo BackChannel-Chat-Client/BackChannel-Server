@@ -170,10 +170,12 @@
     <ClCompile Include="src\linked_list.c" />
     <ClCompile Include="src\log.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\messages.c" />
     <ClCompile Include="src\networking.c" />
     <ClCompile Include="src\protocol.c" />
     <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_CHANNELS.c" />
     <ClCompile Include="src\requests\BACKCHANNEL_REQ_GET_ERRNO.c" />
+    <ClCompile Include="src\requests\BACKCHANNEL_REQ_SEND_MESSAGE.c" />
     <ClCompile Include="src\threads.c" />
     <ClCompile Include="src\tls.c" />
   </ItemGroup>
@@ -184,9 +186,11 @@
     <ClInclude Include="include\linked_list.h" />
     <ClInclude Include="include\log.h" />
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\messages.h" />
     <ClInclude Include="include\networking.h" />
     <ClInclude Include="include\protocol.h" />
     <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_ERRNO.h" />
+    <ClInclude Include="include\requests\BACKCHANNEL_REQ_SEND_MESSAGE.h" />
     <ClInclude Include="include\threads.h" />
     <ClInclude Include="include\requests\BACKCHANNEL_REQ_GET_CHANNELS.h" />
     <ClInclude Include="include\tls.h" />

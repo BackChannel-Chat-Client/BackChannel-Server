@@ -1,6 +1,8 @@
 #include <stdint.h>
 //#include "channels.h"
 
+#define _CRT_SECURE_NO_WARNINGS
+
 typedef uint32_t BC_STATUS;
 
 #define BC_UNREFERENCED_PARAMETER(x) (x)
